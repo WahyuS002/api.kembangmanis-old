@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('files', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("gallery_id");
-            $table->string("file_path");
-            $table->timestamps();
-
-            $table->foreign("gallery_id")->references("id")->on("galleries")->onDelete("cascade");
+            $table->string("key")->unique();
+            $table->mediumText("value")->nullable();
         });
     }
 
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('files');
+        Schema::dropIfExists('settings');
     }
 };
