@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Galleries\GalleryStoreRequest;
-use App\Models\File;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 
@@ -28,14 +27,9 @@ class GalleryController extends Controller
             'title' => $request->input('title'),
         ]);
 
-        if ($request->hasFile('files')) {
-            foreach ($request->file('files') as $uploadedFile) {
-                $filePath = $uploadedFile->store('gallery_files');
-
-                File::create([
-                    'gallery_id' => $gallery->id,
-                    'file_path' => $filePath,
-                ]);
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $gallery->addMedia($image)->toMediaCollection();
             }
         }
 

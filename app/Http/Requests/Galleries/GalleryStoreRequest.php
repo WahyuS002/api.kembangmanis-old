@@ -26,7 +26,7 @@ class GalleryStoreRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'files.*' => 'required|mimes:jpeg,png,pdf|max:2048', // Adjust allowed file types and maximum file size as needed
+            'images.*' => 'required|mimes:jpeg,png,pdf|max:2048', // Adjust allowed file types and maximum file size as needed
         ];
     }
 
