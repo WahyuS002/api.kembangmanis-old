@@ -29,7 +29,7 @@ class SettingSeeder extends Seeder
 
                 $setting->addMedia(public_path('images/' . $value))
                     ->preservingOriginal()
-                    ->toMediaCollection('structure');
+                    ->toMediaCollection();
             } else {
                 DB::table('settings')->insertOrIgnore([
                     'key' => $key,
