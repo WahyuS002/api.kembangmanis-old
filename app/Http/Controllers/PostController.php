@@ -2,33 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\NewsStoreRequest;
-use App\Models\News;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
-class NewsController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $posts = Post::with('author')->paginate(9);
+        return response()->json($posts, 200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(NewsStoreRequest $request)
+    public function store(Request $request)
     {
         try {
-            $news = News::create($request->except('thumbnail'));
-            $news->addMediaFromRequest('thumbnail')->toMediaCollection('news');
+            $post = Post::create($request->except('thumbnail'));
+            $post->addMediaFromRequest('thumbnail')->toMediaCollection('posts');
 
-            return response()->json($news, 201);
+            return response()->json($post, 201);
         } catch (\Throwable $error) {
             return response()->json([
-                'message' => 'Failed to create news.',
+                'message' => 'Failed to create post.',
                 'error' => $error->getMessage()
             ], 500);
         }

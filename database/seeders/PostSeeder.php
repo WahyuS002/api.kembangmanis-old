@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\News;
+use App\Models\Post;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class NewsSeeder extends Seeder
+class PostSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $newsData = [
+        $posts = [
             [
                 'title' => 'Sambangi Mahasiswa KKN, Bhabinkamtibmas Polsek Lais Minta Mahasiswa Membaur dengan Warga',
                 'content' => 'Bhabinkamtibmas Polsek Lais Aipda Fedi Aften menyambangi Mahasiswa Universitas Bengkulu (Unib) yang sedang melaksanakan Kuliah Kerja Nyata (KKN) pada pagi Senin (17/7).
@@ -35,16 +35,16 @@ class NewsSeeder extends Seeder
             ]
         ];
 
-        foreach ($newsData as $data) {
-            $news = News::create([
+        foreach ($posts as $data) {
+            $post = Post::create([
                 'title' => $data['title'],
                 'content' => $data['content'],
                 'author_id' => $data['author_id'],
             ]);
 
-            $news->addMedia(public_path('images/news/' . $data['thumbnail']))
+            $post->addMedia(public_path('images/posts/' . $data['thumbnail']))
                 ->preservingOriginal()
-                ->toMediaCollection("news");
+                ->toMediaCollection("posts");
         }
     }
 }

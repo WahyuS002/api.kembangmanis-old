@@ -9,7 +9,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class News extends Model implements HasMedia
+class Post extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia, HasSlug;
 
