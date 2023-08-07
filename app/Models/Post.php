@@ -28,4 +28,9 @@ class Post extends Model implements HasMedia
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
     }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('posts');
+    }
 }

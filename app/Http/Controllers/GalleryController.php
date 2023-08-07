@@ -29,7 +29,7 @@ class GalleryController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $gallery->addMedia($image)->toMediaCollection();
+                $gallery->addMedia($image)->preservingOriginal()->toMediaCollection("galleries");
             }
         }
 
