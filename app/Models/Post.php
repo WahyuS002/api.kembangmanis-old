@@ -22,6 +22,11 @@ class Post extends Model implements HasMedia
         return $this->belongsTo(User::class, 'author_id');
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -31,6 +36,6 @@ class Post extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('posts');
+        $this->addMediaCollection('post_thumbnails');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Posts\{PostStoreRequest, PostUpdateRequest};
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -19,11 +20,11 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostStoreRequest $request)
     {
         try {
             $post = Post::create($request->except('thumbnail'));
-            $post->addMediaFromRequest('thumbnail')->toMediaCollection('posts');
+            $post->addMediaFromRequest('thumbnail')->toMediaCollection('post_thumbnails');
 
             return response()->json($post, 201);
         } catch (\Throwable $error) {
@@ -37,17 +38,28 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        //
+        return response()->json($post->load('media', 'author'), 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PostUpdateRequest $request, Post $post)
     {
-        //
+        try {
+            $post->update($request->except('thumbnail'));
+
+            if ($request->hasFile('thumbnail')) {
+                $post->clearMediaCollection('post_thumbnails');
+                $post->addMediaFromRequest('thumbnail')->toMediaCollection('post_thumbnails');
+            }
+
+            return response()->json(['message' => 'Post updated successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while updating the post'], 500);
+        }
     }
 
     /**

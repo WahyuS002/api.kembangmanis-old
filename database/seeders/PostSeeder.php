@@ -58,7 +58,7 @@ class PostSeeder extends Seeder
 
             $post->addMedia(public_path('images/posts/' . $data['thumbnail']))
                 ->preservingOriginal()
-                ->toMediaCollection("posts");
+                ->toMediaCollection("post_thumbnails");
         }
     }
 }
