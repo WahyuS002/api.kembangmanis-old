@@ -21,11 +21,17 @@ class NewsController extends Controller
      */
     public function store(NewsStoreRequest $request)
     {
-        News::create($request->validated());
+        try {
+            $news = News::create($request->except('thumbnail'));
+            $news->addMediaFromRequest('thumbnail')->toMediaCollection('news');
 
-        return response()->json([
-            'message' => 'News created successfully',
-        ], 201);
+            return response()->json($news, 201);
+        } catch (\Throwable $error) {
+            return response()->json([
+                'message' => 'Failed to create news.',
+                'error' => $error->getMessage()
+            ], 500);
+        }
     }
 
     /**
