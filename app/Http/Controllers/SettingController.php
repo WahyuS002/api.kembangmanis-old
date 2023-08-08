@@ -14,7 +14,7 @@ class SettingController extends Controller
         $allowedFields = [];
 
         switch ($settingType) {
-            case 'structure':
+            case 'structure-image':
                 $allowedFields = ['structureImage'];
                 break;
         }
@@ -48,7 +48,7 @@ class SettingController extends Controller
         $settingType = $request->settingType;
 
         switch ($settingType) {
-            case 'structure':
+            case 'structure-image':
                 $mediaItems = Setting::where('key', 'structureImage')->first()->getMedia('setting_images');
                 return response()->json([
                     "message" => "Successfuly get the structure image",
