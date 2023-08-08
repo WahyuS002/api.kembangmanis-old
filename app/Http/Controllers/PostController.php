@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Posts\{PostStoreRequest, PostUpdateRequest};
+use App\Http\Resources\PostCollection;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['author', 'media'])->paginate(9);
+        $posts = new PostCollection(Post::with(['author', 'media'])->paginate(6));
         return response()->json($posts, 200);
     }
 
