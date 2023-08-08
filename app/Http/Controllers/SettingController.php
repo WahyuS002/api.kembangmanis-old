@@ -9,7 +9,6 @@ class SettingController extends Controller
 {
     public function update(Request $request)
     {
-        dd($request->all());
         $settingType = $request->settingType;
 
         $allowedFields = [];
@@ -25,12 +24,18 @@ class SettingController extends Controller
         ]);
 
         foreach ($allowedFields as $field) {
-            if (isset($request->settings[$field])) {
+            if (isset($request->settings_value[$field])) {
                 Setting::where('key', $field)
                     ->update(
-                        ['value' => $request->settings[$field]]
+                        ['value' => $request->settings_value[$field]]
                     );
             }
+        }
+
+        if ($request->hasFile('structureImage')) {
+            $structure = Setting::where('key', 'structureImage')->first();
+            $structure->clearMediaCollection('setting_images');
+            $structure->addMediaFromRequest('structureImage')->toMediaCollection('setting_images');
         }
 
         return response()->json([
@@ -44,7 +49,7 @@ class SettingController extends Controller
 
         switch ($settingType) {
             case 'structure':
-                $mediaItems = Setting::where('key', 'structureImage')->first()->getMedia();
+                $mediaItems = Setting::where('key', 'structureImage')->first()->getMedia('setting_images');
                 return response()->json([
                     "message" => "Successfuly get the structure image",
                     "structureImage" => $mediaItems[0]->getFullUrl(),

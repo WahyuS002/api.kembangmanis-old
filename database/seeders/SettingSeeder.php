@@ -17,7 +17,7 @@ class SettingSeeder extends Seeder
         $data = [
             'siteName' => 'Desa Kembang Manis',
             'siteDescription' => 'Website Desa Kembang Manis',
-            'structureImage' => 'struktur-pemerintah.png', // Replace this with the image filename
+            'structureImage' => null,
         ];
 
         foreach ($data as $key => $value) {
@@ -27,9 +27,9 @@ class SettingSeeder extends Seeder
                     'value' => $value,
                 ]);
 
-                $setting->addMedia(public_path('images/' . $value))
+                $setting->addMedia(public_path('images/struktur-pemerintah.png'))
                     ->preservingOriginal()
-                    ->toMediaCollection();
+                    ->toMediaCollection('setting_images');
             } else {
                 DB::table('settings')->insertOrIgnore([
                     'key' => $key,

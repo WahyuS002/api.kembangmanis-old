@@ -12,4 +12,9 @@ class Setting extends Model implements HasMedia
     use HasFactory, InteractsWithMedia;
 
     public $timestamps = false;
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('setting_images');
+    }
 }
