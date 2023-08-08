@@ -17,4 +17,9 @@ class Gallery extends Model implements HasMedia
     {
         return $this->hasMany(File::class);
     }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('gallery_images');
+    }
 }
