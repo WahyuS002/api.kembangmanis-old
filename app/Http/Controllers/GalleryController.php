@@ -14,7 +14,7 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        $galleries = new GalleryCollection(Gallery::with('media')->paginate(6));
+        $galleries = new GalleryCollection(Gallery::with('media')->paginate(8));
         return response()->json($galleries, 200);
     }
 
