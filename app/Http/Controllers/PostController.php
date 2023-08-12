@@ -14,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = new PostCollection(Post::with(['author', 'media'])->paginate(6));
+        $posts = new PostCollection(Post::with(['author', 'media'])->latest()->paginate(6));
         return response()->json($posts, 200);
     }
 
