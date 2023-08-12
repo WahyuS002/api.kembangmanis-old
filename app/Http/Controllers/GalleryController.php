@@ -42,9 +42,9 @@ class GalleryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Gallery $gallery)
     {
-        //
+        return response()->json($gallery->load('media'), 200);
     }
 
     /**
@@ -58,8 +58,11 @@ class GalleryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Gallery $gallery)
     {
-        //
+        $gallery->clearMediaCollection('gallery_images');
+        $gallery->delete();
+
+        return response()->json(['message' => 'Gallery deleted successfully'], 200);
     }
 }

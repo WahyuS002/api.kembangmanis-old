@@ -13,7 +13,7 @@ class Post extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia, HasSlug;
 
-    protected $fillable = ['title', 'content', 'author_id'];
+    protected $fillable = ['title', 'slug', 'content', 'author_id'];
 
     protected $hidden = ['author_id'];
 
